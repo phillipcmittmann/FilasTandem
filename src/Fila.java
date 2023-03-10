@@ -9,4 +9,9 @@ public class Fila {
 		this.capacidadeMaxFila = capacidadeMaxFila;
 		this.estadoFila = 0;
 	}
+	
+	public int getEstadoFila() { return this.estadoFila; }
+	public void colocaNaFila() { this.estadoFila++; }
+	
+	public int getCapacidadeMaxFila() { return this.capacidadeMaxFila; }
 }
