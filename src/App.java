@@ -7,6 +7,8 @@ public class App {
 		int maxInteracoes = 100000;
 		int contadorInteracoes = 0;
 		
+		Escalonador escalonador = new Escalonador();
+		
 		Fila fila = new Fila(qtdServidores, capacidadeMaxFila);
 		
 		while (contadorInteracoes < maxInteracoes) {
