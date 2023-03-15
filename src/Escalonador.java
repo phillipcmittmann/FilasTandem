@@ -5,6 +5,7 @@ import java.util.Queue;
 public class Escalonador {
 	private Queue<Evento> eventos;
 	private Gerador gerador;
+	private int contadorInteracoes = 0;
 	
 	public Escalonador(int a, int m, int c, int sementeInicial) {
 		this.eventos = new PriorityQueue<Evento>(5, new Comparator<>() {
@@ -18,20 +19,22 @@ public class Escalonador {
 		this.gerador = new Gerador(a, m, c, sementeInicial);
 	}
 	
-	public void agendaEvento(Fila fila, int contadorInteracoes, TipoEvento tipoEvento) {
+	public void agendaEvento(Fila fila, TipoEvento tipoEvento, double tempoAtual) {
 		double random = gerador.next();
-		contadorInteracoes++;
+		this.contadorInteracoes++;
 
 		if (tipoEvento == TipoEvento.CHEGADA) {
 			double tempoEvento = ((fila.getTempoMaxChegada() - fila.getTempoMinChegada()) * random) + fila.getTempoMinChegada();	
 			
-			eventos.add(new Evento(tipoEvento, tempoEvento));
+			eventos.add(new Evento(tipoEvento, tempoEvento + tempoAtual));
 		} else if (tipoEvento == TipoEvento.SAIDA) {
 			double tempoEvento = ((fila.getTempoMaxSaida() - fila.getTempoMinSaida()) * random) + fila.getTempoMinSaida();	
 			
-			eventos.add(new Evento(tipoEvento, tempoEvento));
+			eventos.add(new Evento(tipoEvento, tempoEvento + tempoAtual));
 		}
 	}
 	
 	public Queue<Evento> getEventos() { return this.eventos; }
+	
+	public int getContadorInteracoes() { return this.contadorInteracoes; }
 }
