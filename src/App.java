@@ -4,8 +4,7 @@ public class App {
 	public static void main(String[] args) {
 		int qtdServidores = 2;
 		int capacidadeMaxFila = 6;
-		int maxInteracoes = 100000;
-		int contadorInteracoes = 0;
+		int maxInteracoes = 5;
 		double tempo = 0;
 		int qtdPerdas = 0;
 		
@@ -18,9 +17,11 @@ public class App {
 		
 		Fila fila = new Fila(qtdServidores, capacidadeMaxFila, 2, 4, 3, 5);
 		
-		while (contadorInteracoes < maxInteracoes) {
+		escalonador.agendaEvento(fila, TipoEvento.CHEGADA, 0);
+		
+		while (escalonador.getContadorInteracoes() < maxInteracoes) {
 			Evento eventoAtual = escalonador.getEventos().poll();
-			tempo = eventoAtual.getTempo();
+			tempo = tempo + eventoAtual.getTempo();
 			fila.setTempoEmCadaEstado(tempo);
 			
 			if (eventoAtual.getTipoEvento() == TipoEvento.SAIDA) {
@@ -30,10 +31,10 @@ public class App {
 					fila.colocaNaFila();
 					
 					if (fila.getEstadoFila() <= fila.getQtdServidores()) {
-						escalonador.agendaEvento(fila, contadorInteracoes, TipoEvento.SAIDA);
+						escalonador.agendaEvento(fila, TipoEvento.SAIDA, tempo);
 					}
 					
-					escalonador.agendaEvento(fila, contadorInteracoes, TipoEvento.CHEGADA);
+					escalonador.agendaEvento(fila, TipoEvento.CHEGADA, tempo);
 				} else {
 					qtdPerdas++;
 				}
