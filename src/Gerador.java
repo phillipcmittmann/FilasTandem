@@ -15,7 +15,7 @@ public class Gerador {
 	}
 	
 	public double next() {
-		this.sementeAtual = (((this.a * this.sementeInicial) + this.c) % this.m);
+		this.sementeAtual = (((this.a * (this.sementeAtual == -1 ? this.sementeInicial : this.sementeAtual)) + this.c) % this.m);
 		return (double)this.sementeAtual / (double)this.m;
 	}
 }
