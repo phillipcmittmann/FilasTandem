@@ -1,9 +1,10 @@
+import java.util.Arrays;
 
 public class App {
 
 	public static void main(String[] args) {
-		int qtdServidores = 2;
-		int capacidadeMaxFila = 6;
+		int qtdServidores = 1;
+		int capacidadeMaxFila = 5;
 		int maxInteracoes = 5;
 		double tempo = 0;
 		int qtdPerdas = 0;
@@ -17,7 +18,7 @@ public class App {
 		
 		Fila fila = new Fila(qtdServidores, capacidadeMaxFila, 2, 4, 3, 5);
 		
-		escalonador.agendaEvento(fila, TipoEvento.CHEGADA, 0);
+		escalonador.getEventos().add(new Evento(TipoEvento.CHEGADA, 3));
 		
 		while (escalonador.getContadorInteracoes() < maxInteracoes) {
 			Evento eventoAtual = escalonador.getEventos().poll();
@@ -41,6 +42,6 @@ public class App {
 			}
 		}
 		
-		System.out.println(fila.toStringTempoEstadosFila());
+		System.out.println(Arrays.toString(fila.getTempoEstadosFila()));
 	}
 }
