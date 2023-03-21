@@ -5,14 +5,14 @@ public class App {
 	public static void main(String[] args) {
 		int qtdServidores = 1;
 		int capacidadeMaxFila = 5;
-		int maxInteracoes = 5;
+		int maxInteracoes = 100000;
 		double tempo = 0;
 		int qtdPerdas = 0;
 		
-		int a = 4;
-		int m = 9;
-		int c = 4;
-		int sementeInicial = 7;
+		int a = 51861;
+		int m = 31813;
+		int c = 13584;
+		int sementeInicial = 15833;
 		
 		Escalonador escalonador = new Escalonador(a, m, c, sementeInicial);
 		
@@ -38,10 +38,12 @@ public class App {
 					escalonador.agendaEvento(fila, TipoEvento.CHEGADA, tempo);
 				} else {
 					qtdPerdas++;
+					escalonador.agendaEvento(fila, TipoEvento.CHEGADA, tempo);
 				}
 			}
 		}
 		
 		System.out.println(Arrays.toString(fila.getTempoEstadosFila()));
+		System.out.println("Perdas: " + qtdPerdas);
 	}
 }
