@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Fila {
 	private int qtdServidores;
@@ -29,10 +30,14 @@ public class Fila {
 	
 	public int getCapacidadeMaxFila() { return this.capacidadeMaxFila; }
 	
-	public void setTempoEmCadaEstado(double tempo) { 
-		this.tempoEmCadaEstado[this.estadoFila] = tempo - this.tempoAnterior;
-		this.tempoAnterior = tempo;
-	 }
+//	public void setTempoEmCadaEstado(double tempo) { 
+//		this.tempoEmCadaEstado[this.estadoFila] = tempo - this.tempoAnterior;
+//		this.tempoAnterior = tempo;
+//	}
+	
+	public void contabilizaTempo(double tempo) {
+		this.tempoEmCadaEstado[this.estadoFila] = tempo;
+	}
 	
 	public int getQtdServidores() { return this.qtdServidores; }
 	

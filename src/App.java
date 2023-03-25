@@ -22,23 +22,28 @@ public class App {
 		
 		while (escalonador.getContadorInteracoes() < maxInteracoes) {
 			Evento eventoAtual = escalonador.getEventos().poll();
-			tempo = tempo + eventoAtual.getTempo();
-			fila.setTempoEmCadaEstado(tempo);
+			tempo = eventoAtual.getTempo();
 			
-			if (eventoAtual.getTipoEvento() == TipoEvento.SAIDA) {
-				fila.retiraDaFila();
-			} else if (eventoAtual.getTipoEvento() == TipoEvento.CHEGADA) {
+			if (eventoAtual.getTipoEvento() == TipoEvento.CHEGADA) {
+				fila.contabilizaTempo(tempo);
+				
 				if (fila.getEstadoFila() < fila.getCapacidadeMaxFila()) {
 					fila.colocaNaFila();
 					
 					if (fila.getEstadoFila() <= fila.getQtdServidores()) {
 						escalonador.agendaEvento(fila, TipoEvento.SAIDA, tempo);
 					}
-					
-					escalonador.agendaEvento(fila, TipoEvento.CHEGADA, tempo);
 				} else {
 					qtdPerdas++;
-					escalonador.agendaEvento(fila, TipoEvento.CHEGADA, tempo);
+				}
+				
+				escalonador.agendaEvento(fila, TipoEvento.CHEGADA, tempo);
+			} else if (eventoAtual.getTipoEvento() == TipoEvento.SAIDA) {
+				fila.contabilizaTempo(tempo);
+				fila.retiraDaFila();
+				
+				if (fila.getEstadoFila() >= fila.getQtdServidores()) {
+					escalonador.agendaEvento(fila, TipoEvento.SAIDA, tempo);
 				}
 			}
 		}
