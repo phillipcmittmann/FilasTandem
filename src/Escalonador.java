@@ -20,21 +20,50 @@ public class Escalonador {
 	}
 	
 	public void agendaEvento(Fila fila, TipoEvento tipoEvento, double tempoAtual) {
-		double random = gerador.next();
-		this.contadorInteracoes++;
-
 		if (tipoEvento == TipoEvento.CHEGADA) {
-			double tempoEvento = ((fila.getTempoMaxChegada() - fila.getTempoMinChegada()) * random) + fila.getTempoMinChegada();	
-			
-			eventos.add(new Evento(tipoEvento, tempoEvento + tempoAtual));
+			double tempoEvento = ((fila.getTempoMaxChegada() - fila.getTempoMinChegada()) * geraAleatorio()) + fila.getTempoMinChegada();
+
+			eventos.add(new Evento(tipoEvento, tempoEvento + tempoAtual, fila));
 		} else if (tipoEvento == TipoEvento.SAIDA) {
-			double tempoEvento = ((fila.getTempoMaxSaida() - fila.getTempoMinSaida()) * random) + fila.getTempoMinSaida();	
+			double tempoEvento = ((fila.getTempoMaxSaida() - fila.getTempoMinSaida()) * geraAleatorio()) + fila.getTempoMinSaida();
+
+			eventos.add(new Evento(tipoEvento, tempoEvento + tempoAtual, fila));
+		} else if (tipoEvento == TipoEvento.TROCA) {
+			double tempoEvento = ((fila.getTempoMaxSaida() - fila.getTempoMinSaida()) * geraAleatorio()) + fila.getTempoMinSaida();
 			
-			eventos.add(new Evento(tipoEvento, tempoEvento + tempoAtual));
+			eventos.add(new Evento(tipoEvento, tempoEvento + tempoAtual, fila));
 		}
 	}
 	
-	public Queue<Evento> getEventos() { return this.eventos; }
-	
-	public int getContadorInteracoes() { return this.contadorInteracoes; }
+	public double geraAleatorio() {
+		double random = gerador.next();
+		this.contadorInteracoes++;
+		
+		return random;
+	}
+
+	public Queue<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(Queue<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
+	public Gerador getGerador() {
+		return gerador;
+	}
+
+	public void setGerador(Gerador gerador) {
+		this.gerador = gerador;
+	}
+
+	public int getContadorInteracoes() {
+		return contadorInteracoes;
+	}
+
+	public void setContadorInteracoes(int contadorInteracoes) {
+		this.contadorInteracoes = contadorInteracoes;
+	}
+
 }
