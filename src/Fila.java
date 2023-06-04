@@ -85,7 +85,7 @@ public class Fila {
 	}
 
 	public int getEstadoFila() { return this.estadoFila; }
-	
+
 	public int getCapacidadeMaxFila() { return this.capacidadeMaxFila; }
 	
 	public void contabilizaTempo(double tempo) {
