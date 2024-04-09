@@ -1,33 +1,28 @@
+public class Evento implements Comparable<Evento> {
+    private int tipo; // 0 = CHEGADA, 1 = SAIDA, 2 = PASSAGEM
+    private double tempo;
 
-public class Evento {
+    public Evento(int tipo, double tempo) {
+        this.tipo = tipo;
+        this.tempo = tempo;
+    }
 
-	private TipoEvento tipoEvento;
-	private double tempo;
-	private Fila fila;
-	
-	public Fila getFila() {
-		return fila;
-	}
+    public int getTipo() {
+        return this.tipo;
+    }
 
-	public void setFila(Fila fila) {
-		this.fila = fila;
-	}
-
-	public void setTipoEvento(TipoEvento tipoEvento) {
-		this.tipoEvento = tipoEvento;
-	}
-
-	public void setTempo(double tempo) {
-		this.tempo = tempo;
-	}
-
-	public Evento(TipoEvento tipoEvento, double tempo, Fila fila) {
-		this.tipoEvento = tipoEvento;
-		this.tempo = tempo;
-		this.fila = fila;
-	}
-	
-	public TipoEvento getTipoEvento() { return this.tipoEvento; }
-	
-	public double getTempo() { return this.tempo; }
+    public double getTempo() {
+        return this.tempo;
+    }
+    
+    @Override
+    public int compareTo(Evento ev) {
+        if (this.tempo == ev.getTempo()) {
+            return 0;
+        } else if (this.tempo > ev.getTempo()) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
 }

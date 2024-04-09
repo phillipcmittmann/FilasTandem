@@ -1,124 +1,103 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Fila {
-	private int qtdServidores;
-	private int capacidadeMaxFila;
-	protected int estadoFila;
-	protected double[] tempoEmCadaEstado;
-	private double tempoMinChegada;
-	private double tempoMaxChegada;
-	private double tempoMinSaida;
-	private double tempoMaxSaida;
-	private List<FilaAlvo> filasAlvo;
-	private String nomeFila;
-	
-	// SEM CAPACIDADE MAXIMA
-	public Fila(int qtdServidores, double tempoMinChegada, double tempoMaxChegada, double tempoMinSaida, double tempoMaxSaida, String nomeFila) {
-		this.qtdServidores = qtdServidores;
-		this.estadoFila = 0;
-		this.tempoMinChegada = tempoMinChegada;
-		this.tempoMaxChegada = tempoMaxChegada;
-		this.tempoMinSaida = tempoMinSaida;
-		this.tempoMaxSaida = tempoMaxSaida;
-		this.nomeFila = nomeFila;
-	}
-	
-	// SEM TEMPO DE CHEGADA
-	public Fila(int qtdServidores, int capacidadeMaxFila, double tempoMinSaida, double tempoMaxSaida, String nomeFila) {
-		this.qtdServidores = qtdServidores;
-		this.capacidadeMaxFila = capacidadeMaxFila;
-		this.estadoFila = 0;
-		this.tempoEmCadaEstado = new double[capacidadeMaxFila + 1];
-		this.tempoMinSaida = tempoMinSaida;
-		this.tempoMaxSaida = tempoMaxSaida;
-		this.nomeFila = nomeFila;
-	}
-	
-	public Fila() {}
-	
-	public void colocaNaFila() { this.estadoFila++; }
-	public void retiraDaFila() { this.estadoFila--; }
-	
-	public double[] getTempoEmCadaEstado() {
-		return tempoEmCadaEstado;
-	}
+    private int minChegada;
+    private int maxChegada;
+    private int minAtendimento;
+    private int maxAtendimento;
+    private int estadoAtualFila;
+    private int servidores;
+    private int capacidade;
+    private int perda;
+    private double[] estados;
 
-	public void setTempoEmCadaEstado(double[] tempoEmCadaEstado) {
-		this.tempoEmCadaEstado = tempoEmCadaEstado;
-	}
+    public Fila(int servidores, int capacidade, int minChegada, int maxChegada, int minAtendimento, int maxAtendimento) {
+        this.estadoAtualFila = 0;
+        this.estados = new double[capacidade + 1];
+        this.servidores = servidores;
+        this.capacidade = capacidade;
+        this.minChegada = minChegada;
+        this.maxChegada = maxChegada;
+        this.minAtendimento = minAtendimento;
+        this.maxAtendimento = maxAtendimento;
+        this.perda = 0;
+    }
+    
+    public Fila(int servidores, int capacidade, int minAtendimento, int maxAtendimento) {
+    	this.estadoAtualFila = 0;
+    	this.estados = new double[capacidade + 1];
+        this.servidores = servidores;
+        this.capacidade = capacidade;
+        this.minAtendimento = minAtendimento;
+        this.maxAtendimento = maxAtendimento;
+        this.perda = 0;
+    }
 
-	public String getNomeFila() {
-		return nomeFila;
-	}
+    public int getMinChegada() {
+        return this.minChegada;
+    }
 
-	public void setNomeFila(String nomeFila) {
-		this.nomeFila = nomeFila;
-	}
+    public int getMaxChegada() {
+        return this.maxChegada;
+    }
 
-	public void setQtdServidores(int qtdServidores) {
-		this.qtdServidores = qtdServidores;
-	}
+    public int getMinAtendimento() {
+        return this.minAtendimento;
+    }
 
-	public void setCapacidadeMaxFila(int capacidadeMaxFila) {
-		this.capacidadeMaxFila = capacidadeMaxFila;
-	}
+    public int getMaxAtendimento() {
+        return this.maxAtendimento;
+    }
 
-	public void setEstadoFila(int estadoFila) {
-		this.estadoFila = estadoFila;
-	}
+    public int getServidores() {
+        return this.servidores;
+    }
 
-	public void setTempoMinChegada(double tempoMinChegada) {
-		this.tempoMinChegada = tempoMinChegada;
-	}
+    public int getCapacidade() {
+        return this.capacidade;
+    }
 
-	public void setTempoMaxChegada(double tempoMaxChegada) {
-		this.tempoMaxChegada = tempoMaxChegada;
-	}
+    public int getPerda() {
+        return this.perda;
+    }
 
-	public void setTempoMinSaida(double tempoMinSaida) {
-		this.tempoMinSaida = tempoMinSaida;
-	}
+    public void addPerda() {
+        this.perda++;
+    }
 
-	public void setTempoMaxSaida(double tempoMaxSaida) {
-		this.tempoMaxSaida = tempoMaxSaida;
-	}
+    public int getEstadoAtualFila() {
+        return this.estadoAtualFila;
+    }
 
-	public int getEstadoFila() { return this.estadoFila; }
+    public void setEstadoAtualFila(int novEstadoAtualFila) {
+        this.estadoAtualFila = novEstadoAtualFila;
+    }
 
-	public int getCapacidadeMaxFila() { return this.capacidadeMaxFila; }
-	
-	public void contabilizaTempo(double tempo) {
-		this.tempoEmCadaEstado[this.estadoFila] = tempo;
-	}
-	
-	public int getQtdServidores() { return this.qtdServidores; }
-	
-	public double getTempoMinChegada() { return this.tempoMinChegada; }
-	public double getTempoMaxChegada() { return this.tempoMaxChegada;  }
-	public double getTempoMinSaida() { return this.tempoMinSaida; }
-	public double getTempoMaxSaida() { return this.tempoMaxSaida; }
-	public double[] getTempoEstadosFila() { return this.tempoEmCadaEstado; }
+    public double[] getEstados() {
+        return this.estados;
+    }
 
-	public List<FilaAlvo> getFilasAlvo() {
-		return filasAlvo;
-	}
-	
-	public void setFilasAlvo(List<FilaAlvo> filasAlvo) {
-		this.filasAlvo = filasAlvo;
-	}
-	
-	public Fila getFilaAlvo(double random) {
-		FilaAlvo aux = this.getFilasAlvo().get(0);
-		
-		for (FilaAlvo fila : this.getFilasAlvo()) {
-			if (random >= fila.getProbabilidade() && random >= aux.getProbabilidade()) {
-				aux = fila;
-			}
-		}
-		
-		return aux.getFila();
-	}
-	
-	public String toStringTempoEstadosFila() { return this.tempoEmCadaEstado.toString(); }
+    public void setEstado(int posicao, double valor) {
+        this.estados[posicao] = valor;
+    }
+
+    public void chegadaCliente() {
+        this.estadoAtualFila++;
+    }
+
+    public void saidaCliente() {
+        this.estadoAtualFila--;
+    }
+
+    public String toString() {
+        StringBuilder msg = new StringBuilder();
+
+        msg.append("G|G|").append(this.servidores).append("|").append(this.capacidade).append(" --> CH: ").append(this.minChegada).append("..").append(this.maxChegada).append(" --> AT: ").append(this.minAtendimento).append("..").append(this.maxAtendimento).append("\n");
+
+        for (int i = 0; i < estados.length; i++) {
+            msg.append("est").append(i).append(": ").append(estados[i]).append("\n");
+        }
+        
+        msg.append("perdas: ").append(perda).append("\n");
+
+        return msg.toString();
+    }
 }
