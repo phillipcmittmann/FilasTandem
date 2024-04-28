@@ -1,5 +1,5 @@
 public class Evento implements Comparable<Evento> {
-    private int tipo; // 0 = CHEGADA, 1 = SAIDA, 2 = PASSAGEM
+    private int tipo; // 0 = CHEGADA, 1 = SAIDA, 2 = PASSAGEM, 3 = PASSAGEM F2 PARA F1 
     private double tempo;
 
     public Evento(int tipo, double tempo) {
